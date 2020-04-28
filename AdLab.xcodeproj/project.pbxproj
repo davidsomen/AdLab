@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		014C8360244577F600B1716F /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C835F244577F600B1716F /* Package.swift */; };
 		01DB49952435BC2300A348A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB49942435BC2300A348A8 /* AppDelegate.swift */; };
 		01DB49972435BC2300A348A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB49962435BC2300A348A8 /* SceneDelegate.swift */; };
 		01DB49992435BC2300A348A8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB49982435BC2300A348A8 /* ContentView.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		014C835F244577F600B1716F /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		01DB49912435BC2300A348A8 /* AdLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01DB49942435BC2300A348A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01DB49962435BC2300A348A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				01DB49942435BC2300A348A8 /* AppDelegate.swift */,
 				01DB49962435BC2300A348A8 /* SceneDelegate.swift */,
 				01DB49982435BC2300A348A8 /* ContentView.swift */,
+				014C835F244577F600B1716F /* Package.swift */,
 				01DB499A2435BC2800A348A8 /* Assets.xcassets */,
 				01DB499F2435BC2800A348A8 /* LaunchScreen.storyboard */,
 				01DB49A22435BC2800A348A8 /* Info.plist */,
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				014C8360244577F600B1716F /* Package.swift in Sources */,
 				01DB49952435BC2300A348A8 /* AppDelegate.swift in Sources */,
 				01DB49972435BC2300A348A8 /* SceneDelegate.swift in Sources */,
 				01DB49992435BC2300A348A8 /* ContentView.swift in Sources */,
