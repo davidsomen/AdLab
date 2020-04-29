@@ -22,56 +22,86 @@ struct ConectView_Previews: PreviewProvider {
     }
 }
 
-struct AddressForm: View {
-    var address: Binding<Address>
+struct AddressTextFields: View {
+    @Binding var address: Address
     
-    var addressView: some View {
-        Section(header: Text("Address")) {
-            TextField("Street", text: address.street)
-            TextField("City", text: address.city)
-            TextField("State", text: address.state)
-            TextField("Post Code", text: address.postcode)
-            TextField("Country", text: address.country)
+    var body: some View {
+        Group() {
+            TextField("Street", text: $address.street).autocapitalization(.words)
+            TextField("City", text: $address.city).autocapitalization(.words)
+            TextField("State", text: $address.state).autocapitalization(.words)
+            TextField("Post Code", text: $address.postcode).autocapitalization(.words)
+            TextField("Country", text: $address.country).autocapitalization(.allCharacters)
         }
     }
+}
+
+struct ContactTextFields: View {
+    @Binding var address: Address
     
-    var contactView: some View {
-        Section() {
-            TextField("Telephone", text: address.telephone).keyboardType(.numberPad)
-            TextField("Email", text: address.email).keyboardType(.emailAddress)
+    var body: some View {
+        Group() {
+            TextField("Telephone", text: $address.telephone).keyboardType(.numberPad)
+            TextField("Email", text: $address.email).keyboardType(.emailAddress).autocapitalization(.none)
         }
     }
+}
+
+struct ReturnAddressForm: View {
+    @Binding var address: Address
+    @Binding var isActive: Bool
     
     var body: some View {
         Form {
-            addressView
-            contactView
-        }
+            Section() {
+                AddressTextFields(address: $address)
+            }
+            Section() {
+                ContactTextFields(address: $address)
+            }
+        }.navigationBarTitle("Return Address", displayMode: .inline)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(trailing: Button("Save") {
+                self.isActive = false
+            })
+    }
+}
+
+struct PDFModal: View {
+    var body: some View {
+        Text("PDF")
     }
 }
 
 struct PackageForm: View {
     @State private var package = Package()
+    @State private var showReturnAddressForm = false
+    @State private var showPDFModal = false
     
     var body: some View {
         Form {
             Section {
-                NavigationLink("Return Address", destination:
-                    AddressForm(address: $package.fromAddress).body
-                        .navigationBarTitle("Return Address")
-                )
+                NavigationLink(destination:
+                ReturnAddressForm(address: $package.fromAddress, isActive: $showReturnAddressForm), isActive: $showReturnAddressForm) {
+                    Text("Return Address").lineLimit(1).layoutPriority(1)
+                    Spacer()
+                    Text(package.fromAddress.street).foregroundColor(.gray).lineLimit(1).minimumScaleFactor(0.8)
+                }
+                
             }
-            
-            AddressForm(address: $package.toAddress).addressView
-            AddressForm(address: $package.toAddress).contactView
-            
-            Section(header: Text("Postage Type")) {
+            Section(header: Text("Receipt Address")) {
+                AddressTextFields(address: $package.toAddress)
+            }
+            Section() {
+                ContactTextFields(address: $package.toAddress)
+            }
+            Section(header: Text("Postage")) {
                 Picker("Postage Type", selection: $package.postageType) {
                     Text("AIRMAIL").tag(PostageType.airmail)
                     Text("SAL").tag(PostageType.sal)
                 }.pickerStyle(SegmentedPickerStyle())
                 Toggle(isOn: $package.isSmallPacket) {
-                Text("Small Packet")
+                    Text("Small Packet")
                 }
             }
             
@@ -80,8 +110,10 @@ struct PackageForm: View {
             }
             
             Section(footer: Text(package.toAddress.isComplete ? "" : "Please fill in all fields.").foregroundColor(.red)) {
-                Button(action: {}) {
-                    Text("Generate PDF")
+                Button("Generate PDF") {
+                    self.showPDFModal = true
+                }.sheet(isPresented: $showPDFModal) {
+                    PDFModal()
                 }
             }.disabled(!package.toAddress.isComplete)
         }.navigationBarTitle("AdLab").navigationBarItems(trailing: Button(action: {}) {
@@ -94,14 +126,14 @@ struct PackageLabelPreview: View {
     let package: Package
     
     static let RENDER_SIZE = CGSize(width: 500, height: 400)
-        
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0.0) {
                 VStack(spacing: 0.0) {
                     //Text("Return Address")
                     //    .minimumScaleFactor(0.5)
-                        //.rotationEffect(.degrees(-90))
+                    //.rotationEffect(.degrees(-90))
                     Rectangle()
                         //.stroke(Color.black)
                         .foregroundColor(.clear)
@@ -144,10 +176,10 @@ struct PackageLabelPreview: View {
                         .minimumScaleFactor(0.5)
                         .font(.title),
                     alignment: .leading)
-            }.border(Color.black)
+        }.border(Color.black)
             .padding(5)
             .frame(width: PackageLabelPreview.RENDER_SIZE.width,
-                height: PackageLabelPreview.RENDER_SIZE.height)
+                   height: PackageLabelPreview.RENDER_SIZE.height)
     }
 }
 
