@@ -90,21 +90,11 @@ struct PackageForm: View {
     }
 }
 
-struct HDivider: View {
-    var body: some View {
-        Rectangle().frame(height: 1)
-    }
-}
-
-struct VDivider: View {
-    var body: some View {
-        Rectangle().frame(width: 1)
-    }
-}
-
 struct PackageLabelPreview: View {
     let package: Package
     
+    static let RENDER_SIZE = CGSize(width: 500, height: 400)
+        
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0.0) {
@@ -123,7 +113,7 @@ struct PackageLabelPreview: View {
                                 .padding(10),
                             alignment: .topLeading)
                 }
-                VDivider()
+                Divider().frame(width: 1).background(Color.black)
                 Rectangle()
                     .foregroundColor(.clear)
                     .overlay(
@@ -134,18 +124,18 @@ struct PackageLabelPreview: View {
                                     .fontWeight(.bold)
                                     .minimumScaleFactor(0.1)
                                     .padding(5)
-                                HDivider()
+                                Divider().frame(height: 1).background(Color.black)
                             }
                             Text(package.postageType.rawValue)
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .minimumScaleFactor(0.5)
                                 .padding(5)
-                            HDivider()
+                            Divider().frame(height: 1).background(Color.black)
                         },
                         alignment: .topTrailing)
             }.frame(height: 150)
-            HDivider()
+            Divider().frame(height: 1).background(Color.black)
             Rectangle()
                 .foregroundColor(.clear)
                 .overlay(
@@ -156,7 +146,8 @@ struct PackageLabelPreview: View {
                     alignment: .leading)
             }.border(Color.black)
             .padding(5)
-            .frame(width: 500, height: 400)
+            .frame(width: PackageLabelPreview.RENDER_SIZE.width,
+                height: PackageLabelPreview.RENDER_SIZE.height)
     }
 }
 
@@ -164,11 +155,14 @@ struct PackageLabelMiniPreview: View {
     var package: Package
     
     var body: some View {
-        let scale: CGFloat = 0.7
+        let SCALE: CGFloat = 0.6
+        let height = PackageLabelPreview.RENDER_SIZE.height * SCALE
         
-        return PackageLabelPreview(package: package)
-            .scaleEffect(scale, anchor: .topLeading)
-            .frame(width: 500 * scale, height: 400 * scale, alignment: .topLeading)
+        return GeometryReader { proxy in
+            PackageLabelPreview(package: self.package)
+                .scaleEffect(SCALE)
+                .frame(width: proxy.size.width, height: height)
+        }.frame(height: height)
     }
 }
 
