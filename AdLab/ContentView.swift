@@ -100,7 +100,7 @@ struct PackageForm: View {
                     Text("AIRMAIL").tag(PostageType.airmail)
                     Text("SAL").tag(PostageType.sal)
                 }.pickerStyle(SegmentedPickerStyle())
-                Toggle(isOn: $package.isSmallPacket) {
+                Toggle(isOn: $package.isSmallPacket.animation()) {
                     Text("Small Packet")
                 }
             }
@@ -151,7 +151,7 @@ struct PackageLabelPreview: View {
                     .overlay(
                         VStack(alignment: .trailing, spacing: 0.0) {
                             if package.isSmallPacket {
-                                Text("SMALL PACKAGE")
+                                Text("SMALL PACKET")
                                     .font(.title)
                                     .fontWeight(.bold)
                                     .minimumScaleFactor(0.1)
