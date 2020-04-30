@@ -6,24 +6,22 @@
 //  Copyright © 2020 David Somen. All rights reserved.
 //
 
-enum PostageType: String {
+enum PostageType: String, Codable {
     case airmail = "AIRMAIL"
     case sal = "SAL"
 }
 
-struct Address {
-    var street: String = ""
-    var city: String = ""
-    var state: String = ""
-    var postcode: String = ""
-    var country: String = ""
-    var telephone: String = ""
-    var email: String = ""
+struct Address: Codable {
+    var street = String()
+    var city = String()
+    var state = String()
+    var postcode = String()
+    var country = String()
+    var telephone = String()
+    var email = String()
     
     var isComplete: Bool {
-        !street.isEmpty &&
-            !country.isEmpty &&
-            !postcode.isEmpty
+        !street.isEmpty && !country.isEmpty && !postcode.isEmpty
     }
     
     var fullAddress: String {
@@ -33,9 +31,9 @@ struct Address {
     }
 }
 
-struct Package {
+struct Package: Codable {
     var toAddress = Address()
     var fromAddress = Address()
-    var isSmallPacket: Bool = true
-    var postageType: PostageType = .airmail
+    var isSmallPacket = true
+    var postageType = PostageType.airmail
 }
