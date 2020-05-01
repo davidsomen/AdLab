@@ -24,7 +24,7 @@ struct PackageLabelView: View {
                         //.stroke(Color.black)
                         .foregroundColor(.clear)
                         .overlay(
-                            Text(package.fromAddress.fullAddress)
+                            Text(package.returnAddress.fullAddress)
                                 .font(.body)
                                 .padding(5)
                                 .minimumScaleFactor(0.5)
@@ -44,12 +44,14 @@ struct PackageLabelView: View {
                                     .padding(5)
                                 Divider().frame(height: 1).background(Color.black)
                             }
-                            Text(package.postageType.rawValue)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .minimumScaleFactor(0.5)
-                                .padding(5)
-                            Divider().frame(height: 1).background(Color.black)
+                            if package.postageType != .none {
+                                Text(package.postageType.rawValue)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .minimumScaleFactor(0.5)
+                                    .padding(5)
+                                Divider().frame(height: 1).background(Color.black)
+                            }
                         },
                         alignment: .topTrailing)
             }.frame(height: 150)
@@ -57,7 +59,7 @@ struct PackageLabelView: View {
             Rectangle()
                 .foregroundColor(.clear)
                 .overlay(
-                    Text(package.toAddress.fullAddress)
+                    Text(package.receiptAddress.fullAddress)
                         .padding(15)
                         .minimumScaleFactor(0.5)
                         .font(.title),

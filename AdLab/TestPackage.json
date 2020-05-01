@@ -1,5 +1,5 @@
 {
-  "fromAddress": {
+  "returnAddress": {
     "street": "25 East Avenue",
     "city": "Rakusa",
     "country": "Japan",
@@ -8,7 +8,7 @@
     "telephone": "012 345 6789",
     "state": "Gichito"
   },
-  "toAddress": {
+  "receiptAddress": {
     "street": "23 East Avenue",
     "city": "Brom Castlewich",
     "country": "United Kingdom",
@@ -18,5 +18,5 @@
     "state": "Hamingber"
   },
   "isSmallPacket": true,
-  "postageType": "AIRMAIL"
+  "postageType": "AIR MAIL"
 }

@@ -34,21 +34,24 @@ struct ContactTextFields: View {
 }
 
 struct ReturnAddressForm: View {
-    @Binding var address: Address
+    @Binding var package: Package
     @Binding var isActive: Bool
     
     var body: some View {
         Form {
             Section() {
-                AddressTextFields(address: $address)
+                AddressTextFields(address: $package.returnAddress)
             }
             Section() {
-                ContactTextFields(address: $address)
+                ContactTextFields(address: $package.returnAddress)
             }
-        }.navigationBarTitle("Return Address", displayMode: .inline)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(trailing: Button("Done") {
+        }.navigationBarBackButtonHidden(true)
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                self.package.saveReturnAddress()
                 self.isActive = false
+            }) {
+                Text("Done").bold()
             })
     }
 }
@@ -87,7 +90,8 @@ struct PackageLabelMiniPreview: View {
 }
 
 struct PackageForm: View {
-    @State private var package = Package()
+    @State var package: Package
+    
     @State private var showReturnAddressForm = false
     @State private var showPDFModal = false
     
@@ -97,12 +101,12 @@ struct PackageForm: View {
         Form {
             Section {
                 NavigationLink(destination:
-                ReturnAddressForm(address: $package.fromAddress, isActive: $showReturnAddressForm), isActive: $showReturnAddressForm) {
+                ReturnAddressForm(package: $package, isActive: $showReturnAddressForm), isActive: $showReturnAddressForm) {
                     Text("Return Address")
                         .lineLimit(1)
                         .layoutPriority(1)
                     Spacer()
-                    Text(package.fromAddress.street)
+                    Text(package.returnAddress.street)
                         .foregroundColor(.gray)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
@@ -110,18 +114,19 @@ struct PackageForm: View {
                 
             }
             Section(header: Text("Receipt Address")) {
-                AddressTextFields(address: $package.toAddress)
+                AddressTextFields(address: $package.receiptAddress)
             }
             Section() {
-                ContactTextFields(address: $package.toAddress)
+                ContactTextFields(address: $package.receiptAddress)
             }
             Section(header: Text("Postage")) {
                 Toggle(isOn: $package.isSmallPacket.animation()) {
                     Text("Small Packet")
                 }
-                Picker("Postage Type", selection: $package.postageType) {
-                    Text("AIRMAIL").tag(PostageType.airmail)
-                    Text("SAL").tag(PostageType.sal)
+                Picker("Postage Type", selection: $package.postageType.animation()) {
+                    ForEach(PostageType.allCases, id: \.self) { type in
+                        Text(type.rawValue).tag(type)
+                    }
                 }.pickerStyle(SegmentedPickerStyle())
             }
             
@@ -129,7 +134,7 @@ struct PackageForm: View {
                 PackageLabelMiniPreview(package: package).padding()
             }
             
-            Section(footer: Text(package.toAddress.isComplete ? "" : "Please fill in all fields.").foregroundColor(.red)) {
+            Section(footer: Text(package.receiptAddress.isComplete ? "" : "Please fill in all the required fields.").foregroundColor(.red)) {
                 Button("Create PDF") {
                     self.pdfURL = PackageLabelView(package: self.package).exportTempPDF(size: PackageLabelView.RENDER_SIZE)
                     
@@ -139,8 +144,8 @@ struct PackageForm: View {
                         PDFModal(url: self.pdfURL!)
                     }
                 }
-            }//.disabled(!package.toAddress.isComplete)
-        }.navigationBarTitle("AdLab")
+            }.disabled(!package.isComplete)
+        }
     }
 }
 
@@ -148,7 +153,13 @@ struct PackageForm: View {
 
 struct PackageForm_Previews: PreviewProvider {
     static var previews: some View {
-        PackageForm()
+        let path = Bundle.main.path(forResource: "TestPackage", ofType: "json")!
+        let data = try! Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+        let package = try! JSONDecoder().decode(Package.self, from: data)
+        
+        return NavigationView {
+            PackageForm(package: package)
+        }
     }
 }
 
@@ -157,6 +168,7 @@ struct PDFModal_Previews: PreviewProvider {
         let path = Bundle.main.path(forResource: "TestPackage", ofType: "json")!
         let data = try! Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
         let package = try! JSONDecoder().decode(Package.self, from: data)
+        
         return PackageLabelView(package: package).exportTempPDF(size: PackageLabelView.RENDER_SIZE)
     }
     
