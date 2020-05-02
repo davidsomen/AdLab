@@ -8,9 +8,11 @@
 
 import SwiftUI
 
-struct AdLabLogo: View {
+struct LogoView: View {
+    @ObservedObject var logoViewModel: LogoViewModel
+    
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: logoViewModel.spacing) {
             Text("Ad").font(.largeTitle).bold().foregroundColor(Color("Cardboard"))
             Text("Lab").font(.largeTitle).bold().offset(y: 5)
         }
@@ -18,12 +20,14 @@ struct AdLabLogo: View {
 }
 
 struct ContentView: View {
+    @EnvironmentObject var viewModel: ViewModel
+    
     var body: some View {
-        NavigationView {
+        return NavigationView {
             PackageForm(package: Package())
         }.overlay(
             VStack {
-                AdLabLogo()
+                LogoView(logoViewModel: viewModel.logoViewModel)
                 Spacer()
             }.navigationBarTitle("").navigationBarHidden(true)
         )
@@ -34,7 +38,7 @@ struct ContentView: View {
 
 struct ConectView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().previewDevice(PreviewDevice(rawValue: "iPhone XS Max"))
+        ContentView().environmentObject(ViewModel()).previewDevice(PreviewDevice(rawValue: "iPhone XS Max"))
     }
 }
 

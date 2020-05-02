@@ -89,7 +89,20 @@ struct PackageLabelMiniPreview: View {
     }
 }
 
+struct ScrollTrackingView: View {
+    @EnvironmentObject var viewModel: ViewModel
+    
+    var body: some View {
+        GeometryReader { proxy -> AnyView in
+            self.viewModel.logoViewModel.yScroll = proxy.frame(in: .global).midY
+            return AnyView(EmptyView())
+        }
+    }
+}
+
 struct PackageForm: View {
+    @EnvironmentObject var viewModel: ViewModel
+    
     @State var package: Package
     
     @State private var showReturnAddressForm = false
@@ -111,8 +124,7 @@ struct PackageForm: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                 }
-                
-            }
+            }.background(ScrollTrackingView())
             Section(header: Text("Receipt Address")) {
                 AddressTextFields(address: $package.receiptAddress)
             }

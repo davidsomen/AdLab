@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		014C8360244577F600B1716F /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C835F244577F600B1716F /* Package.swift */; };
+		01590599245DB7D8004EA0E1 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01590598245DB7D8004EA0E1 /* ViewModel.swift */; };
 		01DB49952435BC2300A348A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB49942435BC2300A348A8 /* AppDelegate.swift */; };
 		01DB49972435BC2300A348A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB49962435BC2300A348A8 /* SceneDelegate.swift */; };
 		01DB49992435BC2300A348A8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB49982435BC2300A348A8 /* ContentView.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		014C835F244577F600B1716F /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		01590598245DB7D8004EA0E1 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		01DB49912435BC2300A348A8 /* AdLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01DB49942435BC2300A348A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01DB49962435BC2300A348A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				01DB49942435BC2300A348A8 /* AppDelegate.swift */,
 				01DB49962435BC2300A348A8 /* SceneDelegate.swift */,
 				01DB49982435BC2300A348A8 /* ContentView.swift */,
+				01590598245DB7D8004EA0E1 /* ViewModel.swift */,
 				01E24D2F245A9E16009EA1E3 /* PackageForm.swift */,
 				01E24D2D245A9D4A009EA1E3 /* PackageLabelView.swift */,
 				01E24D2624597940009EA1E3 /* View+PDFExport.swift */,
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01590599245DB7D8004EA0E1 /* ViewModel.swift in Sources */,
 				01E24D2E245A9D4A009EA1E3 /* PackageLabelView.swift in Sources */,
 				01E24D30245A9E16009EA1E3 /* PackageForm.swift in Sources */,
 				014C8360244577F600B1716F /* Package.swift in Sources */,
