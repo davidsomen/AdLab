@@ -13,6 +13,7 @@ struct AddressTextFields: View {
     
     var body: some View {
         Group() {
+            TextField("Name", text: $address.name).autocapitalization(.words)
             TextField("Street", text: $address.street).autocapitalization(.words)
             TextField("City", text: $address.city).autocapitalization(.words)
             TextField("State", text: $address.state).autocapitalization(.words)

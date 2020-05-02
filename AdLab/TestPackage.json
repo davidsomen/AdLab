@@ -1,22 +1,24 @@
 {
-  "returnAddress": {
-    "street": "25 East Avenue",
-    "city": "Rakusa",
-    "country": "Japan",
-    "postcode": "123-4567",
-    "email": "testuser@adlab.co.uk",
-    "telephone": "012 345 6789",
-    "state": "Gichito"
-  },
-  "receiptAddress": {
-    "street": "23 East Avenue",
-    "city": "Brom Castlewich",
-    "country": "United Kingdom",
-    "postcode": "E63 9YD",
-    "email": "testuser@adlab.co.uk",
-    "telephone": "012 345 6789",
-    "state": "Hamingber"
-  },
-  "isSmallPacket": true,
-  "postageType": "AIR MAIL"
+    "returnAddress": {
+        "Name": "David Somen"
+        "street": "25 East Avenue",
+        "city": "Rakusa",
+        "country": "Japan",
+        "postcode": "123-4567",
+        "email": "testuser@adlab.co.uk",
+        "telephone": "012 345 6789",
+        "state": "Gichito"
+    },
+    "receiptAddress": {
+        "Name": "Tony Blaire"
+        "street": "23 East Avenue",
+        "city": "Brom Castlewich",
+        "country": "United Kingdom",
+        "postcode": "E63 9YD",
+        "email": "testuser@adlab.co.uk",
+        "telephone": "012 345 6789",
+        "state": "Hamingber"
+    },
+    "isSmallPacket": true,
+    "postageType": "AIR MAIL"
 }

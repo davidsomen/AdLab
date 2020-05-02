@@ -19,6 +19,7 @@ enum PostageType: String, Codable {
 }
 
 struct Address: Codable {
+    var name = String()
     var street = String()
     var city = String()
     var state = String()
@@ -28,11 +29,11 @@ struct Address: Codable {
     var email = String()
     
     var isComplete: Bool {
-        !street.isEmpty && !country.isEmpty && !postcode.isEmpty
+        !name.isEmpty && !street.isEmpty && !country.isEmpty && !postcode.isEmpty
     }
     
     var fullAddress: String {
-        [street, city, state, postcode, country]
+        [name, street, city, state, postcode, country]
             .filter { !$0.isEmpty }
             .joined(separator: "\n")
     }
