@@ -1,6 +1,6 @@
 {
     "returnAddress": {
-        "Name": "David Somen"
+        "name": "David Somen",
         "street": "25 East Avenue",
         "city": "Rakusa",
         "country": "Japan",
@@ -10,7 +10,7 @@
         "state": "Gichito"
     },
     "receiptAddress": {
-        "Name": "Tony Blaire"
+        "name": "Tony Blaire",
         "street": "23 East Avenue",
         "city": "Brom Castlewich",
         "country": "United Kingdom",

@@ -19,8 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
+        // TODO: Remove when SwiftUI accentColor is fixed for Toggle.
+        UISwitch.appearance().onTintColor = UIColor(named: "Cardboard")
+        
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView().environmentObject(ViewModel())
+        let contentView = ContentView().environmentObject(ViewModel()).accentColor(.init("Cardboard"))
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

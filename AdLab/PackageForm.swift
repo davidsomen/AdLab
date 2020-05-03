@@ -171,7 +171,7 @@ struct PackageForm_Previews: PreviewProvider {
         let package = try! JSONDecoder().decode(Package.self, from: data)
         
         return NavigationView {
-            PackageForm(package: package)
+            PackageForm(package: package).environmentObject(ViewModel())
         }
     }
 }
