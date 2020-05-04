@@ -14,64 +14,59 @@ struct PackageLabelView: View {
     static let RENDER_SIZE = CGSize(width: 500, height: 400)
     
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0.0) {
-                VStack(spacing: 0.0) {
-                    //Text("Return Address")
-                    //    .minimumScaleFactor(0.5)
-                    //.rotationEffect(.degrees(-90))
-                    Rectangle()
-                        //.stroke(Color.black)
-                        .foregroundColor(.clear)
-                        .overlay(
-                            Text(package.returnAddress.fullAddress)
-                                .font(.body)
-                                .padding(5)
-                                .minimumScaleFactor(0.5)
-                                .padding(10)
-                                .foregroundColor(.black),
-                            alignment: .topLeading)
-                }
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .top, spacing: 0) {
+                Text(package.returnAddress.fullAddress)
+                    .modifier(ReturnAddressStyle())
+                    .fixedSize()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Divider().frame(width: 1).background(Color.black)
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .overlay(
-                        VStack(alignment: .trailing, spacing: 0.0) {
-                            if package.isSmallPacket {
-                                Text("SMALL PACKET")
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                    .minimumScaleFactor(0.1)
-                                    .padding(5)
-                                    .foregroundColor(.black)
-                                Divider().frame(height: 1).background(Color.black)
-                            }
-                            if package.postageType != .none {
-                                Text(package.postageType.rawValue)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                    .minimumScaleFactor(0.5)
-                                    .padding(5)
-                                    .foregroundColor(.black)
-                                Divider().frame(height: 1).background(Color.black)
-                            }
-                        },
-                        alignment: .topTrailing)
-            }.frame(height: 150)
+                VStack(alignment: .trailing, spacing: 0) {
+                    if package.isSmallPacket {
+                        Text("SMALL PACKET")
+                            .modifier(LabelStyle())
+                        Divider().frame(height: 1).background(Color.black)
+                    }
+                    if package.postageType != .none {
+                        Text(package.postageType.rawValue)
+                            .modifier(LabelStyle())
+                        Divider().frame(height: 1).background(Color.black)
+                    }
+                }
+            }
             Divider().frame(height: 1).background(Color.black)
-            Rectangle()
-                .foregroundColor(.clear)
-                .overlay(
-                    Text(package.receiptAddress.fullAddress)
-                        .padding(15)
-                        .minimumScaleFactor(0.5)
-                        .font(.title)
-                        .foregroundColor(.black),
-                    alignment: .leading)
+            Text(package.receiptAddress.fullAddress)
+                .modifier(ReceiptAddressStyle())
+                .frame(maxHeight: .infinity)
+                .layoutPriority(1)
         }.border(Color.black)
             .frame(width: PackageLabelView.RENDER_SIZE.width,
                    height: PackageLabelView.RENDER_SIZE.height)
             .background(Color.white)
+    }
+}
+
+struct ReturnAddressStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(.system(size: 15))
+            .foregroundColor(.black)
+            .padding(10)
+    }
+}
+
+struct ReceiptAddressStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(.system(size: 25))
+            .foregroundColor(.black)
+            .padding(20)
+    }
+}
+
+struct LabelStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(.system(size: 30, weight: .bold))
+            .foregroundColor(.black)
+            .padding(5)
     }
 }
 
@@ -85,9 +80,9 @@ struct PackageLabelView_Previews: PreviewProvider {
     }
     
     static var previews: some View {
-        Form {
-            PackageLabelMiniPreview(package: package)
-        }
+        PackageLabelView(package: package)
+            .previewLayout(.sizeThatFits)
+            .padding()
     }
 }
 
