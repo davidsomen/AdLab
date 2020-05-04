@@ -9,46 +9,52 @@
 import SwiftUI
 
 struct PackageLabelView: View {
-    let package: Package
-    
-    static let RENDER_SIZE = CGSize(width: 500, height: 400)
+    @ObservedObject var viewModel: PackageLabelViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top, spacing: 0) {
-                Text(package.returnAddress.fullAddress)
+                Text(viewModel.returnAddress)
                     .modifier(ReturnAddressStyle())
                     .fixedSize()
                     .frame(maxWidth: .infinity, alignment: .leading)
+                
                 Divider().frame(width: 1).background(Color.black)
+                
                 VStack(alignment: .trailing, spacing: 0) {
-                    if package.isSmallPacket {
+                    if viewModel.isSmallPacket {
                         Text("SMALL PACKET")
                             .modifier(LabelStyle())
                         Divider().frame(height: 1).background(Color.black)
                     }
-                    if package.postageType != .none {
-                        Text(package.postageType.rawValue)
+                    if !viewModel.postageType.isEmpty {
+                        Text(viewModel.postageType)
                             .modifier(LabelStyle())
                         Divider().frame(height: 1).background(Color.black)
                     }
                 }
             }
+            
             Divider().frame(height: 1).background(Color.black)
-            Text(package.receiptAddress.fullAddress)
+            
+            Text(viewModel.receiptAddress)
                 .modifier(ReceiptAddressStyle())
+                .fixedSize()
                 .frame(maxHeight: .infinity)
                 .layoutPriority(1)
+            if !viewModel.receiptDetails.isEmpty {
+                Text(viewModel.receiptDetails).modifier(ReturnAddressStyle())
+            }
         }.border(Color.black)
-            .frame(width: PackageLabelView.RENDER_SIZE.width,
-                   height: PackageLabelView.RENDER_SIZE.height)
+            .frame(width: PackageLabelViewModel.RENDER_SIZE.width,
+                   height: PackageLabelViewModel.RENDER_SIZE.height)
             .background(Color.white)
     }
 }
 
 struct ReturnAddressStyle: ViewModifier {
     func body(content: Content) -> some View {
-        content.font(.system(size: 15))
+        content.font(.system(size: 12))
             .foregroundColor(.black)
             .padding(10)
     }
@@ -80,7 +86,7 @@ struct PackageLabelView_Previews: PreviewProvider {
     }
     
     static var previews: some View {
-        PackageLabelView(package: package)
+        PackageLabelView(viewModel: PackageLabelViewModel(package: package))
             .previewLayout(.sizeThatFits)
             .padding()
     }

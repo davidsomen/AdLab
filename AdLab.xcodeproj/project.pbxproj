@@ -21,6 +21,8 @@
 		01E24D2E245A9D4A009EA1E3 /* PackageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E24D2D245A9D4A009EA1E3 /* PackageLabelView.swift */; };
 		01E24D30245A9E16009EA1E3 /* PackageForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E24D2F245A9E16009EA1E3 /* PackageForm.swift */; };
 		01E24D32245AA6FF009EA1E3 /* TestPackage.json in Resources */ = {isa = PBXBuildFile; fileRef = 01E24D31245AA6FF009EA1E3 /* TestPackage.json */; };
+		01F46DB7246045D400EB0E8A /* PackageLabelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F46DB6246045D400EB0E8A /* PackageLabelViewModel.swift */; };
+		01F46DB92460488A00EB0E8A /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F46DB82460488A00EB0E8A /* Address.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		01E24D2D245A9D4A009EA1E3 /* PackageLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageLabelView.swift; sourceTree = "<group>"; };
 		01E24D2F245A9E16009EA1E3 /* PackageForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageForm.swift; sourceTree = "<group>"; };
 		01E24D31245AA6FF009EA1E3 /* TestPackage.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TestPackage.json; sourceTree = "<group>"; };
+		01F46DB6246045D400EB0E8A /* PackageLabelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageLabelViewModel.swift; sourceTree = "<group>"; };
+		01F46DB82460488A00EB0E8A /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,10 +82,12 @@
 				01590598245DB7D8004EA0E1 /* ViewModel.swift */,
 				01E24D2F245A9E16009EA1E3 /* PackageForm.swift */,
 				01E24D2D245A9D4A009EA1E3 /* PackageLabelView.swift */,
+				01F46DB6246045D400EB0E8A /* PackageLabelViewModel.swift */,
 				01E24D2624597940009EA1E3 /* View+PDFExport.swift */,
 				01E24D2924597D4F009EA1E3 /* PDFViewer.swift */,
 				01E24D2B245984CF009EA1E3 /* ActivityView.swift */,
 				014C835F244577F600B1716F /* Package.swift */,
+				01F46DB82460488A00EB0E8A /* Address.swift */,
 				01E24D31245AA6FF009EA1E3 /* TestPackage.json */,
 				01DB499A2435BC2800A348A8 /* Assets.xcassets */,
 				01DB499F2435BC2800A348A8 /* LaunchScreen.storyboard */,
@@ -173,9 +179,11 @@
 			files = (
 				01590599245DB7D8004EA0E1 /* ViewModel.swift in Sources */,
 				01E24D2E245A9D4A009EA1E3 /* PackageLabelView.swift in Sources */,
+				01F46DB7246045D400EB0E8A /* PackageLabelViewModel.swift in Sources */,
 				01E24D30245A9E16009EA1E3 /* PackageForm.swift in Sources */,
 				014C8360244577F600B1716F /* Package.swift in Sources */,
 				01E24D2724597940009EA1E3 /* View+PDFExport.swift in Sources */,
+				01F46DB92460488A00EB0E8A /* Address.swift in Sources */,
 				01DB49952435BC2300A348A8 /* AppDelegate.swift in Sources */,
 				01E24D2A24597D4F009EA1E3 /* PDFViewer.swift in Sources */,
 				01E24D2C245984CF009EA1E3 /* ActivityView.swift in Sources */,

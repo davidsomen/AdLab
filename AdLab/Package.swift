@@ -18,27 +18,6 @@ enum PostageType: String, Codable {
     }
 }
 
-struct Address: Codable {
-    var name = String()
-    var street = String()
-    var city = String()
-    var state = String()
-    var postcode = String()
-    var country = String()
-    var telephone = String()
-    var email = String()
-    
-    var isComplete: Bool {
-        !name.isEmpty && !street.isEmpty && !country.isEmpty && !postcode.isEmpty
-    }
-    
-    var fullAddress: String {
-        [name, street, city, state, postcode, country]
-            .filter { !$0.isEmpty }
-            .joined(separator: "\n")
-    }
-}
-
 struct Package: Codable {
     var receiptAddress = Address()
     var returnAddress = Address()

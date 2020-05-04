@@ -80,10 +80,10 @@ struct PackageLabelMiniPreview: View {
     
     var body: some View {
         let SCALE: CGFloat = 0.6
-        let height = PackageLabelView.RENDER_SIZE.height * SCALE
+        let height = PackageLabelViewModel.RENDER_SIZE.height * SCALE
         
         return GeometryReader { proxy in
-            PackageLabelView(package: self.package)
+            PackageLabelView(viewModel: PackageLabelViewModel(package: self.package))
                 .scaleEffect(SCALE)
                 .frame(width: proxy.size.width, height: height)
         }.frame(height: height)
@@ -144,12 +144,13 @@ struct PackageForm: View {
             }
             
             Section(header: Text("Preview")) {
-                PackageLabelMiniPreview(package: package).padding()
+                PackageLabelMiniPreview(package: package)
             }
             
             Section(footer: Text(package.receiptAddress.isComplete ? "" : "Please fill in all the required fields.").foregroundColor(.red)) {
                 Button("Create PDF") {
-                    self.pdfURL = PackageLabelView(package: self.package).exportTempPDF(size: PackageLabelView.RENDER_SIZE)
+                    let viewModel = PackageLabelViewModel(package: self.package)
+                    self.pdfURL = PackageLabelView(viewModel: viewModel).exportTempPDF(size: PackageLabelViewModel.RENDER_SIZE)
                     
                     self.showPDFModal = true
                 }.sheet(isPresented: $showPDFModal) {
@@ -182,7 +183,8 @@ struct PDFModal_Previews: PreviewProvider {
         let data = try! Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
         let package = try! JSONDecoder().decode(Package.self, from: data)
         
-        return PackageLabelView(package: package).exportTempPDF(size: PackageLabelView.RENDER_SIZE)
+        let viewModel = PackageLabelViewModel(package: package)
+        return PackageLabelView(viewModel: viewModel).exportTempPDF(size: PackageLabelViewModel.RENDER_SIZE)
     }
     
     static var previews: some View {
