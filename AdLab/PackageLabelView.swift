@@ -12,43 +12,90 @@ struct PackageLabelView: View {
     @ObservedObject var viewModel: PackageLabelViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .top, spacing: 0) {
-                Text(viewModel.returnAddress)
-                    .modifier(ReturnAddressStyle())
-                    .fixedSize()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Divider().frame(width: 1).background(Color.black)
-                
-                VStack(alignment: .trailing, spacing: 0) {
-                    if viewModel.isSmallPacket {
-                        Text("SMALL PACKET")
-                            .modifier(LabelStyle())
-                        Divider().frame(height: 1).background(Color.black)
-                    }
-                    if !viewModel.postageType.isEmpty {
-                        Text(viewModel.postageType)
-                            .modifier(LabelStyle())
-                        Divider().frame(height: 1).background(Color.black)
-                    }
+        HStack(alignment: .center) {
+            if viewModel.showDescription {
+                Text(viewModel.description)
+                    .modifier(DescriptionStyle())
+            }
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .top, spacing: 0) {
+                    Text("RETURN")
+                        .modifier(SideLabelStyle())
+                    
+                    Text(viewModel.returnAddress)
+                        .modifier(ReturnAddressStyle())
+                    
+                    Divider().frame(width: 1).background(Color.black)
+                    
+                    VStack(alignment: .trailing, spacing: 0) {
+                        if viewModel.showSmallPacket {
+                            Text("SMALL PACKET")
+                                .modifier(LabelStyle())
+                            
+                            Divider().frame(height: 1).background(Color.black)
+                        }
+                        if viewModel.showPostageType {
+                            Text(viewModel.postageType)
+                                .modifier(LabelStyle())
+                            
+                            Divider().frame(height: 1).background(Color.black)
+                        }
+                    }//.frame(maxWidth: .infinity)
+                    // .layoutPriority(1)
                 }
-            }
-            
-            Divider().frame(height: 1).background(Color.black)
-            
-            Text(viewModel.receiptAddress)
-                .modifier(ReceiptAddressStyle())
-                .fixedSize()
-                .frame(maxHeight: .infinity)
-                .layoutPriority(1)
-            if !viewModel.receiptDetails.isEmpty {
-                Text(viewModel.receiptDetails).modifier(ReturnAddressStyle())
-            }
-        }.border(Color.black)
-            .frame(width: PackageLabelViewModel.RENDER_SIZE.width,
-                   height: PackageLabelViewModel.RENDER_SIZE.height)
+                
+                Divider().frame(height: 1).background(Color.black)
+                
+                HStack(spacing: 10) {
+                    Text("TO")
+                        .modifier(SideLabelStyle())
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(viewModel.receiptAddress)
+                            .modifier(ReceiptAddressStyle())
+                        
+                        if viewModel.showRecieptDetails {
+                            Text(viewModel.receiptDetails).modifier(ReceiptDetailsStyle())
+                        }
+                    }
+                }.frame(maxHeight: .infinity)
+                    .layoutPriority(1)
+            }.border(Color.black)
+        }.frame(width: PackageLabelViewModel.RENDER_SIZE.width,
+                height: PackageLabelViewModel.RENDER_SIZE.height)
             .background(Color.white)
+    }
+}
+
+struct ReceiptDetailsStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(.system(size: 12))
+            .foregroundColor(.black)
+            .fixedSize()
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+
+struct DescriptionStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(.system(size: 12))
+            .foregroundColor(.black)
+            .rotationEffect(.degrees(-90))
+            .fixedSize()
+            .frame(width: 20)
+    }
+}
+
+struct SideLabelStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(.system(size: 15, weight: .bold))
+            .foregroundColor(.black)
+            .rotationEffect(.degrees(-90))
+            .fixedSize()
+            .frame(width: 20)
+            .frame(maxHeight: .infinity)
+            .padding(5)
     }
 }
 
@@ -56,6 +103,8 @@ struct ReturnAddressStyle: ViewModifier {
     func body(content: Content) -> some View {
         content.font(.system(size: 12))
             .foregroundColor(.black)
+            .fixedSize()
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(10)
     }
 }
@@ -64,14 +113,16 @@ struct ReceiptAddressStyle: ViewModifier {
     func body(content: Content) -> some View {
         content.font(.system(size: 25))
             .foregroundColor(.black)
-            .padding(20)
+            .fixedSize()
     }
 }
 
 struct LabelStyle: ViewModifier {
     func body(content: Content) -> some View {
-        content.font(.system(size: 30, weight: .bold))
+        content.font(.system(size: 28, weight: .bold))
             .foregroundColor(.black)
+            .lineLimit(1)
+            .fixedSize()
             .padding(5)
     }
 }

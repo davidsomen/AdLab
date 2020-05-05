@@ -11,19 +11,31 @@ import CoreGraphics
 
 class PackageLabelViewModel: ObservableObject {
     static let RENDER_SIZE = CGSize(width: 500, height: 400)
-
-    @Published var package: Package
     
-    init(package: Package) {
+    @Published private var package: Package
+    
+    required init(package: Package) {
         self.package = package
     }
     
-    var postageType: String {
-        return package.postageType == .none ? "" : package.postageType.rawValue
+    var showPostageType: Bool {
+        package.postageType != .none
     }
     
-    var isSmallPacket: Bool {
+    var postageType: String {
+        package.postageType.rawValue
+    }
+    
+    var showSmallPacket: Bool {
         package.isSmallPacket
+    }
+    
+    var showDescription: Bool {
+        !package.description.isEmpty
+    }
+    
+    var description: String {
+        "\(package.description)(\(package.quantity))"
     }
     
     var returnAddress: String {
@@ -46,5 +58,9 @@ class PackageLabelViewModel: ObservableObject {
         if !package.receiptAddress.email.isEmpty { details.append("EMAIL: \(package.receiptAddress.email)") }
         
         return details.joined(separator: "    |    ")
+    }
+    
+    var showRecieptDetails: Bool {
+        !package.receiptAddress.email.isEmpty || !package.receiptAddress.telephone.isEmpty
     }
 }

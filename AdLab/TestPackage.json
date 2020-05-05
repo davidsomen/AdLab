@@ -20,5 +20,7 @@
         "state": "Hamingber"
     },
     "isSmallPacket": true,
-    "postageType": "AIR MAIL"
+    "postageType": "AIR MAIL",
+    "description": "SD2SP2",
+    "quantity": 1
 }

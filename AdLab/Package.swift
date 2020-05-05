@@ -23,6 +23,8 @@ struct Package: Codable {
     var returnAddress = Address()
     var isSmallPacket = true
     var postageType = PostageType.none
+    var description = ""
+    var quantity = 1
     
     var isComplete: Bool {
         receiptAddress.isComplete && returnAddress.isComplete

@@ -126,13 +126,20 @@ struct PackageForm: View {
                         .minimumScaleFactor(0.8)
                 }
             }.background(ScrollTrackingView())
+            
             Section(header: Text("Receipt Address")) {
                 AddressTextFields(address: $package.receiptAddress)
             }
             Section() {
                 ContactTextFields(address: $package.receiptAddress)
             }
+            
             Section(header: Text("Postage")) {
+                TextField("Item Description", text: $package.description.animation())
+                Stepper("Quantity: \(package.quantity)", value: $package.quantity, in: 1...Int.max)
+            }
+            
+            Section() {
                 Toggle(isOn: $package.isSmallPacket.animation()) {
                     Text("Small Packet")
                 }
