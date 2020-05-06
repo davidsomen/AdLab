@@ -38,6 +38,10 @@ class PackageLabelViewModel: ObservableObject {
         "\(package.description)(\(package.quantity))"
     }
     
+    var showReturnAddress: Bool {
+        !package.returnAddress.fullAddress.isEmpty
+    }
+    
     var returnAddress: String {
         let address = package.returnAddress
         

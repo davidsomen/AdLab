@@ -134,9 +134,11 @@ struct PackageForm: View {
                 ContactTextFields(address: $package.receiptAddress)
             }
             
-            Section(header: Text("Postage")) {
+            Section(header: Text("Package")) {
                 TextField("Item Description", text: $package.description.animation())
-                Stepper("Quantity: \(package.quantity)", value: $package.quantity, in: 1...Int.max)
+                if (!package.description.isEmpty) {
+                    Stepper("Quantity: \(package.quantity)", value: $package.quantity, in: 1...Int.max)
+                }
             }
             
             Section() {
