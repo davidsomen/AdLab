@@ -14,7 +14,11 @@ struct Address: Codable {
     var city = ""
     var state = ""
     var postcode = ""
-    var country = ""
+    var country = "" {
+        didSet {
+            country = country.uppercased()
+        }
+    }
     var telephone = ""
     var email = ""
     

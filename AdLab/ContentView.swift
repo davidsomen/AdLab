@@ -23,13 +23,24 @@ struct ContentView: View {
     @EnvironmentObject var viewModel: ViewModel
     
     var body: some View {
-        return NavigationView {
-            PackageForm(package: Package())
+        TabView {
+            NavigationView {
+                OrdersList()
+            }.tabItem {
+                Text("Orders")
+                Image(systemName: "doc.text.fill")
+            }
+            NavigationView {
+                PackageForm(package: Package())
+            }.tabItem {
+                Text("Create")
+                Image(systemName: "printer.fill")
+            }
         }.overlay(
             VStack {
                 LogoView(logoViewModel: viewModel.logoViewModel)
                 Spacer()
-            }.navigationBarTitle("").navigationBarHidden(true)
+            }
         )
     }
 }
