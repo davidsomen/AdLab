@@ -9,7 +9,7 @@
 import Foundation
 
 class EbayRequest {
-    func get(limit: Int = 0, offset: Int = 0, completionHandler: @escaping (String) -> ()) {
+    func get(limit: Int = 1, offset: Int = 0, completionHandler: @escaping (String, Address?) -> ()) {
         let accessToken = "Bearer " + "" // <-- TODO: NEED USER ACCESS TOKEN
         
         var urlComponents = URLComponents(string: "https://api.ebay.com/sell/fulfillment/v1/order")!
@@ -33,10 +33,24 @@ class EbayRequest {
             do {
                 let root = try JSONDecoder().decode(EBRoot.self, from: data)
                 
-                if let username = root.orders?.first?.buyer?.username {
-                    completionHandler(username)
+                if let contact = root.orders?.first?.fulfillmentStartInstructions?.first?.shippingStep?.shipTo {
+                    let countryName = Locale.current.localizedString(forRegionCode: contact.contactAddress.countryCode)!
+                    
+                    // TODO: Missing addressLine2
+                    let address = Address(
+                        name: contact.fullName,
+                        street: contact.contactAddress.addressLine1,
+                        city: contact.contactAddress.city,
+                        state: contact.contactAddress.stateOrProvince,
+                        postcode: contact.contactAddress.postalCode,
+                        country: countryName,
+                        telephone: contact.primaryPhone.phoneNumber ?? "",
+                        email: contact.email ?? "")
+                    
+                    completionHandler(String(data: data, encoding: .utf8)!, address)
                 } else {
-                    completionHandler(String(data: data, encoding: .utf8)!)
+                    completionHandler(String(data: data, encoding: .utf8)!, nil)
+                    print(String(data: data, encoding: .utf8)!)
                 }
             } catch {
                 print(error)

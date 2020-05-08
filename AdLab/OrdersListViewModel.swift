@@ -9,15 +9,17 @@
 import Foundation
 
 class OrdersListViewModel: ObservableObject {
-    @Published var output: String = ""
+    @Published var address: Address = Address()
+    @Published var responseBody: String = ""
     @Published var offset: Int = 0
     
     private let request = EbayRequest()
     
     func makeRequest() {
-        request.get(offset: offset) { text in
+        request.get(offset: offset) { responseBody, address in
             DispatchQueue.main.async {
-                self.output = text
+                self.responseBody = responseBody
+                if let address = address { self.address = address }
             }
         }
     }
